@@ -41,6 +41,7 @@ video {
 <script setup>
 useHead({ title: `Record` });
 definePageMeta({ layout: "web" });
+const config = useRuntimeConfig();
 
 const video = ref("");
 
@@ -52,11 +53,10 @@ let cameraEnabled = ref(true);
 let micEnabled = ref(true);
 const viewers = {};
 
-let backendBaseUrl = process.env.API_BASE_URL;
 let wsUrl = ref("");
 
 onMounted(() => {
-    wsUrl.value = backendBaseUrl.replace("http", "ws");
+    wsUrl.value = config.public.API_BASE_URL.replace("http", "ws");
 
     wsConnection = new WebSocket(`${wsUrl.value}/ws3`);
     wsConnection.onopen = websocketOnOpen;
