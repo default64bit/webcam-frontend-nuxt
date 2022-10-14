@@ -35,6 +35,7 @@ let viewerID = ref("");
 let error = ref(false);
 let errorMessage = ref("");
 
+let backendBaseUrl = process.env.API_BASE_URL;
 let wsUrl = ref("");
 
 onMounted(() => {
@@ -44,8 +45,8 @@ onMounted(() => {
         return;
     }
 
-    wsUrl.value = window.location.hostname == "localhost" ? "ws://localhost:3001" : `wss://${window.location.hostname}`;
-    // wsUrl.value = window.location.hostname == "localhost" ? "ws://localhost:3001" : `wss://${window.location.hostname}`;
+    wsUrl.value = backendBaseUrl.replace("http", "ws");
+
     wsConnection = new WebSocket(`${wsUrl.value}/ws3`);
     wsConnection.onopen = websocketOnOpen;
     wsConnection.onclose = websocketOnClose;
